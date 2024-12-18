@@ -1,0 +1,30 @@
+Package: BayesMultiomics
+Title: Bayesian Shrinkage Models for Analysis of Genomics Data
+Version: 1.0
+Authors@R: c( 
+    person("Mansoo", "Cho", "", "mcho1234@gmail.com", role = c("aut", "cre")),
+    person("Tanujit", "Dey", "", "tday@bwh.harvard.edu", role = "aut"),
+    person("Hao", "Xue", "", "hx222@cornell.edu", role = "aut"),
+    person("Sounak", "Chakraborty", "", "chakrabortys@missouri.edu", role = "aut")
+    )
+Description: 
+  BayesMultiomics is designed for statistical modeling and inference with a two stage Bayesian shrinkage model specially designed for high dimensional multi-platform genomics and health care data. 
+  Our R package BayesMultiomics is based on Bayesian shrinkage based data integration model developed by us earlier (Xue et al., 2024). 
+  This model can integrate and synthesize data from four different data platforms as a) gene expression, b) DNA Methylation, c) gene functional classification obtained from Database for Annotation, Visualiza-tion, and Integrated Discovery (DAVID) (Sherman et al., 2022; Huang et al., 2009), and d) clinical features and clinical outcomes. 
+  Our BayesMultiomics package offers versatility and flexibility by incorporating information across all 4 mentioned platforms to learn the underlying biological mechanisms among different high-throughput platforms. 
+  In addition, our package is scalable and can perform high-dimensional variable selection for discovering relationship across platforms and identifying clinically relevant biomarkers.
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 4.1.0), reticulate(>= 1.38.0)
+Imports:
+    glmnet (>= 4.1-8), ggplot2 (>= 3.5.0)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
