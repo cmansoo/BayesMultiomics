@@ -187,7 +187,7 @@ BayesMultiomics.CV <- function(
 
   genes_table <- data.frame(
     gene_name = selected_biomarkers,
-    coeff = g_beta,
+    coeff = round(g_beta, 4),
     methylation_group = M_group,
     functional_group = grouping[names(grouping) %in% selected_biomarkers]
   ) |>
@@ -200,7 +200,7 @@ BayesMultiomics.CV <- function(
 
   clinical_table <- data.frame(
     clinical_variable = colnames(C),
-    coeff = c_beta
+    coeff = round(c_beta, 4)
   ) |>
     `rownames<-`(NULL)
 
@@ -339,7 +339,7 @@ BayesMultiomicsPriorSensitivity <- function(
   R2 <- EMVS_result$R2
 
   # build Z matrix
-  Zmatrix <- .Zmat_builder(R2, G, lower_R2 = lower_R2, upper_R2 = upper_R2)
+  Zmatrix <- Zmat_builder(R2, G, lower_R2 = lower_R2, upper_R2 = upper_R2)
 
   # E-M loop step
   # loop params
@@ -436,7 +436,7 @@ BayesMultiomicsPriorSensitivity <- function(
 
       genes_table <- data.frame(
         gene_name = selected_biomarkers,
-        coeff = g_beta,
+        coeff = round(g_beta, 4),
         methylation_group = M_group,
         functional_group = grouping[names(grouping) %in% selected_biomarkers]
       ) |>
@@ -449,7 +449,7 @@ BayesMultiomicsPriorSensitivity <- function(
 
       clinical_table <- data.frame(
         clinical_variable = colnames(C),
-        coeff = c_beta
+        coeff = round(c_beta, 4)
       ) |>
         `rownames<-`(NULL)
 
@@ -485,14 +485,14 @@ BayesMultiomicsPriorSensitivity <- function(
 #'
 #' summary method for BayesMultiomicsPriorSensitivity object
 #'
-#' @param BayesMultiomicsPriorSensitivity_obj BayesMultiomicsPriorSensitivity object
+#' @param BayesMultiomicsPriorSensitivity_obj BayesMultiomicsPriorSensitivity object(t
 #' @export
 summary.BayesMultiomicsPriorSensitivity <- function(BayesMultiomicsPriorSensitivity_obj){
   summary_df <- lapply(BayesMultiomicsPriorSensitivity_obj, function(x){
     pfm <- x[["performance"]] |> t() |> as.data.frame()
-    cf <- x[["Clinical Variables"]] |>
-      `rownames<-`(x[["Clinical Variables"]][["clinical_variable"]])
+    cf <- x[["Clinical Variables"]]
     cf <- cf[["coeff"]] |> t() |> as.data.frame()
+    colnames(cf) <- x[["Clinical Variables"]][["clinical_variable"]]
 
     # return
     cbind(pfm, cf)
@@ -670,7 +670,7 @@ BayesMultiomics <- function(
 
   genes_table <- data.frame(
     gene_name = names(selected_genes),
-    coeff = t(selected_genes)[,],
+    coeff = round(t(selected_genes)[,], 4),
     methylation_group = M_group,
     functional_group = grouping[names(grouping) %in% names(selected_genes)]
   ) |>
@@ -678,7 +678,7 @@ BayesMultiomics <- function(
 
   clinical_table <- data.frame(
     clinical_variable = colnames(C),
-    coeff = t(estbeta[, colnames(C)])[,]
+    coeff = round(t(estbeta[, colnames(C)])[,], 4)
   ) |>
     `rownames<-`(NULL)
 
@@ -688,3 +688,4 @@ BayesMultiomics <- function(
     `Clinical Variables` = clinical_table
   )
 }
+

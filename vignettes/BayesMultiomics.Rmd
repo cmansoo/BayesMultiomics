@@ -75,9 +75,8 @@ The functional classification used in FDSIM is obtained from Database for Annota
 # example data
 M <- GBM_data2$M
 G <- GBM_data2$G
-grouping <- GENE_GROUP2
 
-FSDIM(M, G, grouping, I=10, thresh=0.001)
+FSDIM_result <- FSDIM(M, G, gene_grouping, I=10, thresh=0.001)
 ```
 
 Classify genes into 3 groups using `Zmat_builder`
@@ -92,40 +91,78 @@ SSDIM is a linear model that can be used to detect biomarkers associated with th
 G <- GBM_data2$G
 Y <- GBM_data2$Y
 C <- GBM_data2$C
-R2 <- GBM2_EMVS_res$R2
-Zmatrix <- Zmat_builder(R2, G)
+R2 <- FSDIM_result$R2
+Zmatrix <- Zmat_builder(R2, G, 0.2, 0.8)
+mpmath <- setup_mpmath()
+a0 <- 0.1
+gstr <- "scale"
+
+SSDIM_result <- SSDIM(Y, G, C, a0, gstr, Zmatrix,
+                      I=10, thresh=0.001, .mpmath=mpmath)
+```
+
+## 7. Data Analysis with `Bayesmultiomics`
+
+`BayesMultiomics` function puts together the first and second stage models and performs the entire algorithm. The output summarizes 1) selected genes from the first stages modeling, 2) gene functional classificaiton groups and methylation groups; 3) coefficients of the clinical features and selected genes. `BayesMultiomics.CV` is an extended version `BayesMultiomics` where the performance of models are evaluated using K-fold cross validation. `BayesMultiomicsPriorSensitivity` function performs the same tasks over a range of values of priors `a` and `g`. 
+
+Example with `BayesMultiomics`
+```{r eval=FALSE}
+M <- GBM_data2$M
+G <- GBM_data2$G
+fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics")
+gene_grouping <- DAVIDGeneGrouping(eg_gene_symbols, fp)
+Y <- GBM_data2$Y
+C <- GBM_data2$C
 a0 <- 0.1
 gstr <- "scale"
 mpmath <- setup_mpmath()
 
-NEG_em(Y, G, C, a0, gstr, Zmatrix,
-       I=10, thresh=0.001, .mpmath=mpmath)
+# run
+multiomics <- BayesMultiomics(
+  M=M,
+  G=G,
+  grouping=gene_grouping,
+  Y=Y,
+  C=C,
+  a0=a0,
+  gstr=gstr,
+  EMVS_I = 10,
+  NEG_I= 10,
+  EMVS_thresh = 0.0001,
+  NEG_thresh = 0.0001,
+  transform_M = "L",
+  lower_R2 = 0.2,
+  upper_R2 = 0.8,
+  .mpmath = mpmath
+)
 ```
 
-## 7. summary
+```{r echo=FALSE}
+# pre-run results
+# eg_multiomics <- multiomics
+multiomics <- BayesMultiomics::eg_multiomics
+```
 
-`multiOmics` function puts together the first and second stage models and performs the entire algorithm. The output summarizes 1) selected genes from the first stages modeling, 2) coefficients of the clinical features along with their highest posterior density intervals; 3) model performance based on k-fold cross validation. `multiOmics_sensitivity` function performs the same tasks over a range of `a` and `g` values. 
+```{r fig.width=8, fig.height=8}
+# summaries
+print(multiomics)
+```
 
-Example with `multiOmics`
+
+Example on `BayesMultiomics.CV`
 ```{r eval=FALSE}
 M <- GBM_data2$M
 G <- GBM_data2$G
-fp <- system.file("eg_fx_classification.txt", package="EMMultiOmics")
-gene_grouping <- get_grouping(eg_gene_symbols, fp)
+fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics") # replace with your own file path
+gene_grouping <- DAVIDGeneGrouping(eg_gene_symbols, fp)
 Y <- GBM_data2$Y
 C <- GBM_data2$C
 a0 <- 0.1
 gstr <- "scale"
 Delta <- GBM_data2$Delta
-n_fold <- 10
-random_seed <- 123
-EMVS_I <- 10
-NEG_I <- 10
-EMVS_thresh <- 0.0001
-NEG_thresh <- 0.0001
 
 # run
-multiOmics_obj <- multiOmics(
+multiomics_cv <- BayesMultiomics.CV(
   M=M,
   G=G,
   grouping=gene_grouping,
@@ -134,50 +171,40 @@ multiOmics_obj <- multiOmics(
   a0=a0,
   gstr=gstr,
   Delta=Delta,
-  n_fold=n_fold,
-  random_seed = random_seed,
-  EMVS_I = EMVS_I,
-  NEG_I=NEG_I,
-  EMVS_thresh = EMVS_thresh,
-  NEG_thresh = NEG_thresh
-)
+  n_fold=10,
+  random_seed = 123,
+  EMVS_I = 10,
+  NEG_I=20,
+  EMVS_thresh = 0.0001,
+  NEG_thresh = 0.0001
+  )
 ```
-
 ```{r echo=FALSE}
 # pre-run results
-# eg_multiOmics <- multiOmics_obj
-multiOmics_obj <- EMMultiOmics::eg_multiOmics
+# eg_multiomics_cv <- multiomics_cv
+multiomics_cv <- BayesMultiomics::eg_multiomics_cv
 ```
 
 ```{r fig.width=8, fig.height=8}
-# summaries
-print(multiOmics_obj)
-plot(multiOmics_obj)
+print(multiomics_cv)
+plot(multiomics_cv)
 ```
 
-Example on `multiOmics_sensitivity`
+Example on `BayesMultiomicsPriorSensitivity`
 ```{r eval=FALSE}
 # params
 M <- GBM_data2$M
 G <- GBM_data2$G
-fp <- system.file("eg_fx_classification.txt", package="EMMultiOmics")
-gene_grouping <- get_grouping(eg_gene_symbols, fp)
+fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics") # replace with your own file path
+gene_grouping <- DAVIDGeneGrouping(eg_gene_symbols, fp)
 Y <- GBM_data2$Y
 C <- GBM_data2$C
 Delta <- GBM_data2$Delta
-n_fold <- 10
-random_seed <- 123
-EMVS_I <- 10
-NEG_I <- 10
-EMVS_thresh <- 0.0001
-NEG_thresh <- 0.0001
 
 a0 <- c(0.1, 1, 10, 50)
 g <- list("scale", 1)
-
-
 # run
-multiOmics_s_obj <- multiOmics_sensitivity(
+multiomics_sensitivity <- BayesMultiomicsPriorSensitivity(
   M=M,
   G=G,
   grouping=gene_grouping,
@@ -186,25 +213,28 @@ multiOmics_s_obj <- multiOmics_sensitivity(
   a0_vec=a0,
   gstr_vec=g,
   Delta=Delta,
-  n_fold=n_fold,
-  random_seed = random_seed,
-  EMVS_I = EMVS_I,
-  NEG_I=NEG_I,
-  EMVS_thresh = EMVS_thresh,
-  NEG_thresh = NEG_thresh
-)
+  n_fold=10,
+  random_seed = 123,
+  EMVS_I = 10,
+  NEG_I=20,
+  EMVS_thresh = 0.0001,
+  NEG_thresh = 0.0001
+  )
 ```
 
 ```{r echo=FALSE}
 # pre-run results
-# eg_multiOmics_sensitivity <- multiOmics_s_obj
-multiOmics_s_obj <- EMMultiOmics::eg_multiOmics_sensitivity
+# eg_multiomics_sensitivity <- multiomics_sensitivity
+# save all of them
+# save(eg_multiomics, eg_multiomics_cv, eg_multiomics_sensitivity,
+#      file="../data/eg_multiomics.rda")
+multiomics_sensitivity <- BayesMultiomics::eg_multiomics_sensitivity
 ```
 
 ```{r fig.width=8, fig.height=8}
 # summary
-summary(multiOmics_s_obj)
-plot(multiOmics_s_obj)
+summary(multiomics_sensitivity)
+plot(multiomics_sensitivity)
 ```
 
 (walkthrough on how to use `multiOmics` and `multiOmics_sensitivity` to create summary output/tables/plots...)

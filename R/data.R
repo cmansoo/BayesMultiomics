@@ -28,8 +28,9 @@
 #' Example multiOmics result
 #' @description
 #'
-#' Example `multiOmics` and `multiOmics_sensitivity` from vignette("EMMultiOmics")
+#' Example results of `BayesMultiomics` and `BayesMultiomicsPriorSensitivity` from vignette("BayesMultiomics")
 #'
-#' - eg_multiOmics
-#' - eg_multiOmics_sensitivity
-"eg_multiOmics"
+#' - eg_multiomics
+#' - eg_multiomics_cv
+#' - eg_multiomics_sensitivity
+"eg_multiomics"
