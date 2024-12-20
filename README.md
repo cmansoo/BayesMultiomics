@@ -26,10 +26,10 @@ To obtain gene grouping, we need to get functional classification of the genes u
 
 Please refer to `vignette("gene_grouping")` a detailed guid on using DAVID Functional Classification Tool.
 
-Once the classification file is downloaded as txt, use `DAVIDGeneGrouping()` function to obtain the gene grouping.
+Once the classification file is downloaded as txt, use `DAVIDGeneGrouping()` function to obtain the gene grouping. Replace `fp` with your own file path.
 
 ```
-fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics")
+fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics") # replace with your own.
 gene_grouping <- DAVIDGeneGrouping(eg_gene_symbols, fp)
 gene_grouping
 ```
@@ -66,8 +66,8 @@ C <- GBM_data2$C
 R2 <- FSDIM_result$R2
 Zmatrix <- Zmat_builder(R2, G, 0.2, 0.8)
 mpmath <- setup_mpmath()
-a0 <- 0.1
-gstr <- "scale"
+a <- 0.1
+g <- "scale"
 
 SSDIM_result <- SSDIM(Y, G, C, a0, gstr, Zmatrix,
                       I=10, thresh=0.001, .mpmath=mpmath)
@@ -81,12 +81,12 @@ SSDIM_result <- SSDIM(Y, G, C, a0, gstr, Zmatrix,
 ```
 M <- GBM_data2$M
 G <- GBM_data2$G
-fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics")
+fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics") # replace with your own
 gene_grouping <- DAVIDGeneGrouping(eg_gene_symbols, fp)
 Y <- GBM_data2$Y
 C <- GBM_data2$C
-a0 <- 0.1
-gstr <- "scale"
+a <- 0.1
+g <- "scale"
 mpmath <- setup_mpmath()
 
 # run
@@ -136,8 +136,8 @@ fp <- system.file("eg_fx_classification.txt", package="BayesMultiomics") # repla
 gene_grouping <- DAVIDGeneGrouping(eg_gene_symbols, fp)
 Y <- GBM_data2$Y
 C <- GBM_data2$C
-a0 <- 0.1
-gstr <- "scale"
+a <- 0.1
+g <- "scale"
 Delta <- GBM_data2$Delta
 
 # run
@@ -147,8 +147,8 @@ multiomics_cv <- BayesMultiomics.CV(
   grouping=gene_grouping,
   Y=Y,
   C=C,
-  a0=a0,
-  gstr=gstr,
+  a0=a,
+  gstr=g,
   Delta=Delta,
   n_fold=10,
   random_seed = 123,
@@ -238,7 +238,7 @@ Y <- GBM_data2$Y
 C <- GBM_data2$C
 Delta <- GBM_data2$Delta
 
-a0 <- c(0.1, 1, 10, 50)
+a <- c(0.1, 1, 10, 50)
 g <- list("scale", 1)
 # run
 multiomics_sensitivity <- BayesMultiomicsPriorSensitivity(
@@ -247,7 +247,7 @@ multiomics_sensitivity <- BayesMultiomicsPriorSensitivity(
   grouping=gene_grouping,
   Y=Y,
   C=C,
-  a0_vec=a0,
+  a0_vec=a,
   gstr_vec=g,
   Delta=Delta,
   n_fold=10,
