@@ -69,7 +69,7 @@ mpmath <- setup_mpmath()
 a <- 0.1
 g <- "scale"
 
-SSDIM_result <- SSDIM(Y, G, C, a0, gstr, Zmatrix,
+SSDIM_result <- SSDIM(Y, G, C, a0=a, gstr=g, Zmatrix,
                       I=10, thresh=0.001, .mpmath=mpmath)
 ```
 
@@ -96,8 +96,8 @@ multiomics <- BayesMultiomics(
   grouping=gene_grouping,
   Y=Y,
   C=C,
-  a0=a0,
-  gstr=gstr,
+  a0=a,
+  gstr=g,
   EMVS_I = 10,
   NEG_I= 10,
   EMVS_thresh = 0.0001,
