@@ -295,3 +295,27 @@ plot(multiomics_sensitivity)
 ```
 
 ![alt text](inst/img/sensitivity_plot.PNG)
+
+
+### Common Parameters of `BayesMultiomics` and its family
+
+The default values for nu0, nu1, lambda, a, b were chosen per publication: Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association.
+
+- `nu0`: default = 0.5, Parameter nu0 for spike-and-slab Gaussian mixture prior on β  
+- `nu1`: default = 10^3, Parameter nu0 for spike-and-slab Gaussian mixture prior on β
+<!-- - `nu`: default = 1, Hao did not give me documentation for this -->
+- `lambda`: default = 1, For the prior on σ2, an inverse gamma prior π(σ2∣γ)=IG(ν/2,νλ/2)
+- `a`: default = 1, Parameter a for the beta prior π(θ)∝θa−1(1−θ)b−1, a,b>0
+- `b`: default = 1, Parameter b for the beta prior π(θ)∝θa−1(1−θ)b−1, a,b>0
+- `EMVS_I`: default = 0, Maximum number of iterations of EMVS. 
+- `EMVS_thresh`: default = 1e-04, Threshold for convergence criterion for EMVS
+-` transform_M`: default = "L", transformation parameter for methylation matrix M. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation
+- `NEG_I`: default = 10, number of maximum iterations for NEG_em. 
+- `NEG_thresh`: default = 1e-04, convergence criterion fpr NEG_em 
+- `lower_R2`: default = 0.2, lower limit for R2 threshold for loading matrix Z
+- `upper_R2`: default = 0.8, upper limit for R2 threshold for loading matrix Z
+- `.mpmath`: default = setup_mpmath(), BayesMultiomics imports the mpmath package from python. This parameter is the pointer to mpmath package. Default: setup_mpmath()
+
+
+
+
