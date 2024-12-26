@@ -32,54 +32,56 @@ BayesMultiomics.CV(
 )
 }
 \arguments{
-\item{M}{DNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.}
+\item{M}{DDNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.}
 
-\item{G}{gene expression level}
+\item{G}{Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.}
 
 \item{grouping}{Gene grouping, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classification of genes. See vignette("gene_grouping").}
 
-\item{nu0}{Parameter \code{nu0} for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu0}{Parameter \code{nu0} for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{nu1}{parameter \code{nu1} for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu1}{parameter \code{nu1} for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}}
+\item{nu}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
 
-\item{EMVS_I}{Maximum number of iterations of EMVS}
+\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
 
-\item{EMVS_thresh}{Threshold for convergence criterion for EMVS}
+\item{EMVS_I}{Maximum number of iterations of EMVS.}
 
-\item{Y}{clinical outcome}
+\item{EMVS_thresh}{Threshold for convergence criterion for EMVS.}
 
-\item{C}{clinical features}
+\item{Y}{Clinical outcome, a vector with each element corresponding to the clinical outcome of a sample.}
 
-\item{Delta}{Delta}
+\item{C}{Clinical feature, a matrix with rows corresponding to samples and columns corresponding to clinical features.}
 
-\item{a0}{size sparsity}
+\item{Delta}{Delta.}
 
-\item{gstr}{prior, two options: "scale" or "1"}
+\item{a0}{Shape parameter of the Gamma distribution prior. This parameter affects the within-group and overall sparsity.}
 
-\item{n_fold}{number of folds in K-fold cross validation}
+\item{gstr}{String. Prior with two options: "scale", for applying rescaling, or "1", for not.}
 
-\item{random_seed}{random seed for splitting folds for cross validation}
+\item{n_fold}{Number of folds in K-fold cross validation.}
 
-\item{NEG_I}{number of maximum iterations for NEG_em}
+\item{random_seed}{Random seed for splitting folds for cross validation.}
 
-\item{NEG_thresh}{convergence criterion fpr NEG_em}
+\item{NEG_I}{Number of maximum iterations for NEG_em.}
 
-\item{lower_R2}{lower limit for R2 threshold, default = 0.2}
+\item{NEG_thresh}{Convergence criterion fpr NEG_em.}
 
-\item{upper_R2}{upper limit for R2 threshold, default = 0.8}
+\item{lower_R2}{Lower limit for R2 threshold, default = 0.2.}
 
-\item{transform_M}{transform methylation matrix \code{M}. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation}
+\item{upper_R2}{Upper limit for R2 threshold, default = 0.8.}
+
+\item{transform_M}{Transform methylation matrix \code{M}. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation.}
 
 \item{.mpmath}{(optional) function depends on mpmath package from python. pointer for mpmath package}
 }
 \description{
-Run first and second stage models in \emph{Hao Xue, Sounak Chakraborty & Tanujit Dey (2024), Bayesian Shrinkage Models for Integration and Analysis of Multiplatform High-dimensional Genomics Data}.
+Run first and second stage models in \emph{Hao Xue, Sounak Chakraborty & Tanujit Dey (2024), Bayesian Shrinkage Models for Integration and Analysis of Multiplatform High-dimensional Genomics Data}  and \emph{Mansoo Cho, Tanujit Dey, Hao Xue & Sounak Chakraborty (2025), BayesMultiomics: An R Package for Bayesian Shrinkage Models for Integration and Analysis of Multi-platform High-dimensional Genomics Data}
 In the first stage, Expectation–Maximization Variable Selection (EMVS) is used to learn the regulating mechanism between epigenomics (e.g., gene methylation) and gene expression while considering functional gene annotations.
 Genes are grouped based on the regulating mechanism learned in the first stage using the function, EMVS.
 Then, a group-wise penalty is applied to select genes significantly associated with clinical outcomes while incorporating clinical features using Bayesian variable selection model with extended NEG priors in \emph{Veronika Rockova & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association}.

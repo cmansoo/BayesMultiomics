@@ -29,43 +29,45 @@ BayesMultiomics(
 )
 }
 \arguments{
-\item{M}{DNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.}
+\item{M}{DDNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.}
 
-\item{G}{gene expression level}
+\item{G}{Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.}
 
 \item{grouping}{Gene grouping, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classification of genes. See vignette("gene_grouping").}
 
-\item{nu0}{Parameter \code{nu0} for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu0}{Parameter \code{nu0} for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{nu1}{parameter \code{nu1} for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu1}{parameter \code{nu1} for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}}
+\item{nu}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
 
-\item{EMVS_I}{Maximum number of iterations of EMVS}
+\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
 
-\item{EMVS_thresh}{Threshold for convergence criterion for EMVS}
+\item{EMVS_I}{Maximum number of iterations of EMVS.}
 
-\item{transform_M}{transform methylation matrix \code{M}. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation}
+\item{EMVS_thresh}{Threshold for convergence criterion for EMVS.}
 
-\item{Y}{clinical outcome}
+\item{transform_M}{Transform methylation matrix \code{M}. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation.}
 
-\item{C}{clinical features}
+\item{Y}{Clinical outcome, a vector with each element corresponding to the clinical outcome of a sample.}
 
-\item{a0}{size sparsity}
+\item{C}{Clinical feature, a matrix with rows corresponding to samples and columns corresponding to clinical features.}
 
-\item{gstr}{prior, two options: "scale" or "1"}
+\item{a0}{Shape parameter of the Gamma distribution prior. This parameter affects the within-group and overall sparsity.}
 
-\item{NEG_I}{number of maximum iterations for NEG_em}
+\item{gstr}{String. Prior with two options: "scale", for applying rescaling, or "1", for not.}
 
-\item{NEG_thresh}{convergence criterion fpr NEG_em}
+\item{NEG_I}{Number of maximum iterations for NEG_em.}
 
-\item{lower_R2}{lower limit for R2 threshold, default = 0.2}
+\item{NEG_thresh}{Convergence criterion fpr NEG_em.}
 
-\item{upper_R2}{upper limit for R2 threshold, default = 0.8}
+\item{lower_R2}{Lower limit for R2 threshold, default = 0.2.}
+
+\item{upper_R2}{Upper limit for R2 threshold, default = 0.8.}
 
 \item{.mpmath}{(Optional) function depends on mpmath package from python. pointer for mpmath package. Default: setup_mpmath()}
 }
@@ -76,7 +78,7 @@ Genes are grouped based on the regulating mechanism learned in the first stage u
 Then, a group-wise penalty is applied to select genes significantly associated with clinical outcomes while incorporating clinical features using Bayesian variable selection model with extended NEG priors in \emph{Veronika Rockova & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association}.
 }
 \details{
-\code{gstr} will take two options "scale" or "1." if \code{gstr} == "scale" then g = 1/N^2 where N = number of genes
+\code{gstr} will take two options "scale" or "1." if \code{gstr} == "scale" then g = 1/N^2 where N = number of genes.
 }
 \examples{
 # params

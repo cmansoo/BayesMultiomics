@@ -1,36 +1,37 @@
 #' BayesMultiomics.CV
 #'
-#' Run first and second stage models in *Hao Xue, Sounak Chakraborty & Tanujit Dey (2024), Bayesian Shrinkage Models for Integration and Analysis of Multiplatform High-dimensional Genomics Data*.
+#' Run first and second stage models in *Hao Xue, Sounak Chakraborty & Tanujit Dey (2024), Bayesian Shrinkage Models for Integration and Analysis of Multiplatform High-dimensional Genomics Data*  and *Mansoo Cho, Tanujit Dey, Hao Xue & Sounak Chakraborty (2025), BayesMultiomics: An R Package for Bayesian Shrinkage Models for Integration and Analysis of Multi-platform High-dimensional Genomics Data*
 #' In the first stage, Expectation–Maximization Variable Selection (EMVS) is used to learn the regulating mechanism between epigenomics (e.g., gene methylation) and gene expression while considering functional gene annotations.
 #' Genes are grouped based on the regulating mechanism learned in the first stage using the function, EMVS.
 #' Then, a group-wise penalty is applied to select genes significantly associated with clinical outcomes while incorporating clinical features using Bayesian variable selection model with extended NEG priors in *Veronika Rockova & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association*.
 #' K-fold Cross validation is performed to evaluate model performances. The coefficients from all models are averaged.
 #'
 #'
-#' @param M DNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.
+#' @param M DDNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.
 #' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
 #' @param grouping Gene grouping, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classification of genes. See vignette("gene_grouping").
-#' @param nu0 Parameter `nu0` for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param nu1 parameter `nu1` for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}
-#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param EMVS_I Maximum number of iterations of EMVS
-#' @param EMVS_thresh Threshold for convergence criterion for EMVS
-#' @param Y clinical outcome
-#' @param G gene expression level
-#' @param C clinical features
-#' @param a0 size sparsity
-#' @param gstr prior, two options: "scale" or "1"
-#' @param NEG_I number of maximum iterations for NEG_em
-#' @param NEG_thresh convergence criterion fpr NEG_em
+#' @param nu0 Parameter `nu0` for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param nu1 parameter `nu1` for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param nu For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param EMVS_I Maximum number of iterations of EMVS.
+#' @param EMVS_thresh Threshold for convergence criterion for EMVS.
+#' @param Y Clinical outcome, a vector with each element corresponding to the clinical outcome of a sample.
+#' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
+#' @param C Clinical feature, a matrix with rows corresponding to samples and columns corresponding to clinical features.
+#' @param a0 Shape parameter of the Gamma distribution prior. This parameter affects the within-group and overall sparsity.
+#' @param gstr String. Prior with two options: "scale", for applying rescaling, or "1", for not.
+#' @param NEG_I Number of maximum iterations for NEG_em.
+#' @param NEG_thresh Convergence criterion fpr NEG_em.
 #' @param .mpmath (optional) function depends on mpmath package from python. pointer for mpmath package
-#' @param n_fold number of folds in K-fold cross validation
-#' @param random_seed random seed for splitting folds for cross validation
-#' @param lower_R2 lower limit for R2 threshold, default = 0.2
-#' @param upper_R2 upper limit for R2 threshold, default = 0.8
-#' @param Delta Delta
-#' @param transform_M transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation
+#' @param n_fold Number of folds in K-fold cross validation.
+#' @param random_seed Random seed for splitting folds for cross validation.
+#' @param lower_R2 Lower limit for R2 threshold, default = 0.2.
+#' @param upper_R2 Upper limit for R2 threshold, default = 0.8.
+#' @param Delta Delta.
+#' @param transform_M Transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation.
 #'
 #'
 #' @details
@@ -547,31 +548,32 @@ plot.BayesMultiomicsPriorSensitivity <- function(BayesMultiomicsPriorSensitivity
 #' Then, a group-wise penalty is applied to select genes significantly associated with clinical outcomes while incorporating clinical features using Bayesian variable selection model with extended NEG priors in *Veronika Rockova & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association*.
 #'
 #'
-#' @param M DNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.
+#' @param M DDNA Methylation matrix, a matrix with rows corresponding to samples and columns corresponding to probes/sites.
 #' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
 #' @param grouping Gene grouping, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classification of genes. See vignette("gene_grouping").
-#' @param nu0 Parameter `nu0` for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param nu1 parameter `nu1` for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}
-#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param EMVS_I Maximum number of iterations of EMVS
-#' @param EMVS_thresh Threshold for convergence criterion for EMVS
-#' @param Y clinical outcome
-#' @param G gene expression level
-#' @param C clinical features
-#' @param a0 size sparsity
-#' @param gstr prior, two options: "scale" or "1"
-#' @param NEG_I number of maximum iterations for NEG_em
-#' @param NEG_thresh convergence criterion fpr NEG_em
+#' @param nu0 Parameter `nu0` for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param nu1 parameter `nu1` for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param nu For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param EMVS_I Maximum number of iterations of EMVS.
+#' @param EMVS_thresh Threshold for convergence criterion for EMVS.
+#' @param Y Clinical outcome, a vector with each element corresponding to the clinical outcome of a sample.
+#' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
+#' @param C Clinical feature, a matrix with rows corresponding to samples and columns corresponding to clinical features.
+#' @param a0 Shape parameter of the Gamma distribution prior. This parameter affects the within-group and overall sparsity.
+#' @param gstr String. Prior with two options: "scale", for applying rescaling, or "1", for not.
+#' @param NEG_I Number of maximum iterations for NEG_em.
+#' @param NEG_thresh Convergence criterion fpr NEG_em.
 #' @param .mpmath (Optional) function depends on mpmath package from python. pointer for mpmath package. Default: setup_mpmath()
-#' @param lower_R2 lower limit for R2 threshold, default = 0.2
-#' @param upper_R2 upper limit for R2 threshold, default = 0.8
-#' @param transform_M transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation
+#' @param lower_R2 Lower limit for R2 threshold, default = 0.2.
+#' @param upper_R2 Upper limit for R2 threshold, default = 0.8.
+#' @param transform_M Transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation.
 #'
 #'
 #' @details
-#' `gstr` will take two options "scale" or "1." if `gstr` == "scale" then g = 1/N^2 where N = number of genes
+#' `gstr` will take two options "scale" or "1." if `gstr` == "scale" then g = 1/N^2 where N = number of genes.
 #'
 #' @examples
 #' # params

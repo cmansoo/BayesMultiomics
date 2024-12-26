@@ -1,17 +1,18 @@
 #' Expectation Maximization Variable Selection Function
 #'
-#' Performs Expectation Maximization Variable Selection Function (EMVS) algorithm for input genes.
-#' The default values for `nu0`, `nu1`, `lambda`, `a`, `b` were chosen per publication: *Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association*
+#' Performs Expectation Maximization Variable Selection Function (EMVS) algorithm for input epigenomics and transcriptomics.
+#' The default values for `nu0`, `nu1`, `nu`, `lambda`, `a`, `b` were chosen per publication: *Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association*
 #'
-#' @param M DNA Methylation matrix
-#' @param G Gene expression level
-#' @param grouping Gene grouping
-#' @param nu0 parameter 0 for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param nu1 parameter 1 for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}, <- what is lambda here?
-#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param I Maximum number of iterations of EMVS
+#' @param M Epigenomics (e.g., DNA Methylation matrix), a matrix with rows corresponding to samples and columns corresponding to probes/sites.
+#' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
+#' @param grouping Gene group membership, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classification of genes. See vignette("gene_grouping").
+#' @param nu0 Parameter nu0 for spike-and-slab Gaussian mixture prior on  \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param nu1 Parameter nu1 for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param nu For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param I Maximum number of iterations of EMVS.
 #' @param thresh Threshold for convergence criterion.
 #' @param transform_M transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation
 #'
@@ -212,24 +213,27 @@ Zmat_builder <- function(R2, G, lower_R2=0.2, upper_R2=0.8){
 #' First Stage Data Integration Model (FSDIM)
 #'
 #'
-#' FSDIM Performs EMVS algorithm for genomics data and computes R2 values. Then the genes are grouped into three groups:
-#' 1) M effect, 2) M^c effect; 3) M + M^c effect based on R2 thresholds.
-#' The default values for `nu0`, `nu1`, `lambda`, `a`, `b` were chosen per publication: *Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association*
+#' Run first stage model in *Hao Xue, Sounak Chakraborty & Tanujit Dey (2024), Bayesian Shrinkage Models for Integration and Analysis of Multiplatform High-dimensional Genomics Data* and *Mansoo Cho, Tanujit Dey, Hao Xue & Sounak Chakraborty (2025), BayesMultiomics: An R Package for Bayesian Shrinkage Models for Integration and Analysis of Multi-platform High-dimensional Genomics Data*.
+#' In the first stage, Expectation–Maximization Variable Selection (EMVS) is used to learn the regulating mechanism between epigenomics (e.g., gene methylation) and gene expression while considering functional gene annotations.
+#' Then the genes are grouped into three groups:
+#' i) M effect, ii) M^c effect and iii) M + M^c effect based on R2 thresholds.
+#' The default values for `nu0`, `nu1`, `nu`, `lambda`, `a`, `b` were chosen per publication: *Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association*
 #'
 #'
-#' @param M DNA Methylation matrix
-#' @param G Gene expression level
-#' @param grouping Gene grouping
-#' @param nu0 parameter 0 for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param nu1 parameter 1 for spike-and-slab Gaussian mixture prior on \eqn{\beta}
-#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}, <- what is lambda here?
-#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}
-#' @param I Maximum number of iterations of EMVS
+#' @param M Epigenomics (e.g., DNA Methylation matrix), a matrix with rows corresponding to samples and columns corresponding to probes/sites.
+#' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
+#' @param grouping Gene group membership, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classifaction of genes. See vignette("gene_grouping").
+#' @param nu0 Parameter nu0 for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param nu1 Parameter nu1 for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
+#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)},
+#' @param nu For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
+#' @param I Maximum number of iterations of EMVS.
 #' @param thresh Threshold for convergence criterion.
-#' @param lower_R2 lower limit for R2 threshold, default = 0.2
-#' @param upper_R2 upper limit for R2 threshold, default = 0.8
-#' @param transform_M transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation
+#' @param lower_R2 lower limit for R2 threshold, default = 0.2.
+#' @param upper_R2 upper limit for R2 threshold, default = 0.8.
+#' @param transform_M transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation.
 #'
 #' @examples
 #'
