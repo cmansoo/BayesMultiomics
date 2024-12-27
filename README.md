@@ -307,7 +307,7 @@ The default values for `nu0`, `nu1`, `lambda`, `a`, `b` were chosen per publicat
 - `lambda`: default = 1, For the prior on σ2, an inverse gamma prior π(σ2∣γ)=IG(ν/2,νλ/2)
 - `a`: default = 1, Parameter a for the beta prior π(θ)∝ θ^(a−1)(1−θ)^(b−1), a,b>0
 - `b`: default = 1, Parameter b for the beta prior π(θ)∝ θ^(a−1)(1−θ)^(b−1), a,b>0
-- `EMVS_I`: default = 0, Maximum number of iterations of EMVS. 
+- `EMVS_I`: default = 10, Maximum number of iterations of EMVS. 
 - `EMVS_thresh`: default = 1e-04, Threshold for convergence criterion for EMVS
 - `transform_M`: default = "L", transformation parameter for methylation matrix M. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation
 - `NEG_I`: default = 10, number of maximum iterations for NEG_em. 
