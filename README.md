@@ -303,7 +303,7 @@ The default values for `nu0`, `nu1`, `lambda`, `a`, `b` were chosen per publicat
 
 - `nu0`: default = 0.5, Parameter nu0 for spike-and-slab Gaussian mixture prior on β  
 - `nu1`: default = 10^3, Parameter nu0 for spike-and-slab Gaussian mixture prior on β
-<!-- - `nu`: default = 1, Hao did not give me documentation for this -->
+- `nu`: default = 1, For the prior on σ2, an inverse gamma prior π(σ2∣γ)=IG(ν/2,νλ/2)
 - `lambda`: default = 1, For the prior on σ2, an inverse gamma prior π(σ2∣γ)=IG(ν/2,νλ/2)
 - `a`: default = 1, Parameter a for the beta prior π(θ)∝θa−1(1−θ)b−1, a,b>0
 - `b`: default = 1, Parameter b for the beta prior π(θ)∝θa−1(1−θ)b−1, a,b>0
