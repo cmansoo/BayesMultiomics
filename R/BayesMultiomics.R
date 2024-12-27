@@ -25,7 +25,7 @@
 #' @param gstr String. Prior with two options: "scale", for applying rescaling, or "1", for not.
 #' @param NEG_I Number of maximum iterations for NEG_em.
 #' @param NEG_thresh Convergence criterion fpr NEG_em.
-#' @param .mpmath (optional) function depends on mpmath package from python. pointer for mpmath package
+#' @param .mpmath `BayesMultiomics` imports mpmath package from python. This parameter is the pointer to mpmath package. default = setup_mpmath()
 #' @param n_fold Number of folds in K-fold cross validation.
 #' @param random_seed Random seed for splitting folds for cross validation.
 #' @param lower_R2 Lower limit for R2 threshold, default = 0.2.
@@ -566,7 +566,7 @@ plot.BayesMultiomicsPriorSensitivity <- function(BayesMultiomicsPriorSensitivity
 #' @param gstr String. Prior with two options: "scale", for applying rescaling, or "1", for not.
 #' @param NEG_I Number of maximum iterations for NEG_em.
 #' @param NEG_thresh Convergence criterion fpr NEG_em.
-#' @param .mpmath (Optional) function depends on mpmath package from python. pointer for mpmath package. Default: setup_mpmath()
+#' @param .mpmath `BayesMultiomics` imports mpmath package from python. This parameter is the pointer to mpmath package. default = setup_mpmath()
 #' @param lower_R2 Lower limit for R2 threshold, default = 0.2.
 #' @param upper_R2 Upper limit for R2 threshold, default = 0.8.
 #' @param transform_M Transform methylation matrix `M`. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation.
@@ -586,7 +586,7 @@ plot.BayesMultiomicsPriorSensitivity <- function(BayesMultiomicsPriorSensitivity
 #' C <- GBM_data2$C
 #' a0 <- 0.1
 #' gstr <- "scale"
-#' mpmath <- setup_mpmath()
+#' mpmath <- setup_mpmath() # if mpmath package already exists. Use reticulate::import("mpmath")
 #'
 #' # run
 #' multiomics <- BayesMultiomics(
