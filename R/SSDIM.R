@@ -148,9 +148,9 @@
 #' @export
 setup_mpmath <- function(){
   # if(!reticulate::py_available()) stop("EMMultiOmics::lpcf() requires python 3.x. Please install python.")
-  if(!reticulate::virtualenv_exists("emmultiomics")) reticulate::virtualenv_create("emmultiomics", packages=NULL)
-  reticulate::use_virtualenv("emmultiomics")
-  if(!reticulate::py_module_available("mpmath")) reticulate::virtualenv_install("emmultiomics", packages="mpmath")
+  if(!reticulate::virtualenv_exists("BayesMultiomics")) reticulate::virtualenv_create("BayesMultiomics", packages=NULL)
+  reticulate::use_virtualenv("BayesMultiomics")
+  if(!reticulate::py_module_available("mpmath")) reticulate::virtualenv_install("BayesMultiomics", packages="mpmath")
 
   # return mpmath module
   reticulate::import("mpmath")
