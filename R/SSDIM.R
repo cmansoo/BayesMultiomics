@@ -6,15 +6,15 @@
 #' NEG priors in *Veronika Ročková & Emmanuel Lesaffre (2014): Incorporating grouping information in Bayesian variable selection with applications in genomics, Bayesian Analysis*
 #'
 #'
-#' @param Y clinical outcome
-#' @param G gene expression level
-#' @param C clinical features
-#' @param a0 size sparsity
-#' @param gstr prior, two options: "scale" or "1"
+#' @param Y Clinical outcome, a vector with each element corresponding to the clinical outcome of a sample.
+#' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
+#' @param C Clinical feature, a matrix with rows corresponding to samples and columns corresponding to clinical features.
+#' @param a0 Shape parameter of the Gamma distribution prior. This parameter affects the within-group and overall sparsity.
+#' @param gstr String. Prior with two options: "scale", for applying rescaling, or "1", for not.
 #' @param Zmatrix Loading matrix, a matrix with rows corresponding to genes and columns corresponding to group memberships.
-#' @param I number of maximum iterations
-#' @param thresh convergence criterion
-#' @param .mpmath function depends on mpmath package from python. pointer for mpmath package
+#' @param I Number of maximum iterations.
+#' @param thresh Convergence criterion.
+#' @param .mpmath Function depends on mpmath package from python. Pointer for mpmath package.
 #'
 #' @details
 #' `gstr` will take two options "scale" or "1." if `gstr` == "scale" then g = 1/N^2 where N = number of genes
@@ -235,15 +235,15 @@ setup_mpmath <- function(){
 #' NEG priors in *Veronika Ročková & Emmanuel Lesaffre (2014): Incorporating grouping information in Bayesian variable selection with applications in genomics, Bayesian Analysis*.
 #'
 #'
-#' @param Y clinical outcome
-#' @param G gene expression level
-#' @param C clinical features
-#' @param a0 size sparsity
-#' @param gstr prior, two options: "scale" or "1"
+#' @param Y Clinical outcome, a vector with each element corresponding to the clinical outcome of a sample.
+#' @param G Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.
+#' @param C Clinical feature, a matrix with rows corresponding to samples and columns corresponding to clinical features.
+#' @param a0 Shape parameter of the Gamma distribution prior. This parameter affects the within-group and overall sparsity.
+#' @param gstr String. Prior with two options: "scale", for applying rescaling, or "1", for not.
 #' @param Zmatrix Loading matrix, a matrix with rows corresponding to genes and columns corresponding to group memberships.
-#' @param I number of maximum iterations
-#' @param thresh convergence criterion
-#' @param .mpmath function depends on mpmath package from python. pointer for mpmath package
+#' @param I Number of maximum iterations.
+#' @param thresh Convergence criterion.
+#' @param .mpmath Function depends on mpmath package from python. Pointer for mpmath package.
 #'
 #' @details
 #' `gstr` will take two options "scale" or "1." if `gstr` == "scale" then g = 1/N^2 where N = number of genes

@@ -20,31 +20,33 @@
 )
 }
 \arguments{
-\item{M}{DNA Methylation matrix}
+\item{M}{Epigenomics (e.g., DNA Methylation matrix), a matrix with rows corresponding to samples and columns corresponding to probes/sites.}
 
-\item{G}{Gene expression level}
+\item{G}{Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.}
 
-\item{grouping}{Gene grouping}
+\item{grouping}{Gene group membership, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classification of genes. See vignette("gene_grouping").}
 
-\item{nu0}{parameter 0 for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu0}{Parameter nu0 for spike-and-slab Gaussian mixture prior on  \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{nu1}{parameter 1 for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu1}{Parameter nu1 for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}, <- what is lambda here?}
+\item{nu}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
 
-\item{I}{Maximum number of iterations of EMVS}
+\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
+
+\item{I}{Maximum number of iterations of EMVS.}
 
 \item{thresh}{Threshold for convergence criterion.}
 
 \item{transform_M}{transform methylation matrix \code{M}. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation}
 }
 \description{
-Performs Expectation Maximization Variable Selection Function (EMVS) algorithm for input genes.
-The default values for \code{nu0}, \code{nu1}, \code{lambda}, \code{a}, \code{b} were chosen per publication: \emph{Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association}
+Performs Expectation Maximization Variable Selection Function (EMVS) algorithm for input epigenomics and transcriptomics.
+The default values for \code{nu0}, \code{nu1}, \code{nu}, \code{lambda}, \code{a}, \code{b} were chosen per publication: \emph{Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association}
 }
 \examples{
 

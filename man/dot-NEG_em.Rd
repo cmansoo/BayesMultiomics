@@ -17,23 +17,23 @@
 )
 }
 \arguments{
-\item{Y}{clinical outcome}
+\item{Y}{Clinical outcome, a vector with each element corresponding to the clinical outcome of a sample.}
 
-\item{G}{gene expression level}
+\item{G}{Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.}
 
-\item{C}{clinical features}
+\item{C}{Clinical feature, a matrix with rows corresponding to samples and columns corresponding to clinical features.}
 
-\item{a0}{size sparsity}
+\item{a0}{Shape parameter of the Gamma distribution prior. This parameter affects the within-group and overall sparsity.}
 
-\item{gstr}{prior, two options: "scale" or "1"}
+\item{gstr}{String. Prior with two options: "scale", for applying rescaling, or "1", for not.}
 
 \item{Zmatrix}{Loading matrix, a matrix with rows corresponding to genes and columns corresponding to group memberships.}
 
-\item{I}{number of maximum iterations}
+\item{I}{Number of maximum iterations.}
 
-\item{thresh}{convergence criterion}
+\item{thresh}{Convergence criterion.}
 
-\item{.mpmath}{function depends on mpmath package from python. pointer for mpmath package}
+\item{.mpmath}{Function depends on mpmath package from python. Pointer for mpmath package.}
 }
 \description{
 Genes are grouped based on the regulating mechanism learned in the first stage using the function, using EMVS.

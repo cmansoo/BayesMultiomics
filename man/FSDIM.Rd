@@ -22,38 +22,40 @@ FSDIM(
 )
 }
 \arguments{
-\item{M}{DNA Methylation matrix}
+\item{M}{Epigenomics (e.g., DNA Methylation matrix), a matrix with rows corresponding to samples and columns corresponding to probes/sites.}
 
-\item{G}{Gene expression level}
+\item{G}{Gene expression level, a matrix with rows corresponding to samples and columns corresponding to genes.}
 
-\item{grouping}{Gene grouping}
+\item{grouping}{Gene group membership, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classifaction of genes. See vignette("gene_grouping").}
 
-\item{nu0}{parameter 0 for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu0}{Parameter nu0 for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{nu1}{parameter 1 for spike-and-slab Gaussian mixture prior on \eqn{\beta}}
+\item{nu1}{Parameter nu1 for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}, <- what is lambda here?}
+\item{nu}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)},}
 
-\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}}
+\item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
 
-\item{I}{Maximum number of iterations of EMVS}
+\item{b}{Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
+
+\item{I}{Maximum number of iterations of EMVS.}
 
 \item{thresh}{Threshold for convergence criterion.}
 
-\item{lower_R2}{lower limit for R2 threshold, default = 0.2}
+\item{lower_R2}{lower limit for R2 threshold, default = 0.2.}
 
-\item{upper_R2}{upper limit for R2 threshold, default = 0.8}
+\item{upper_R2}{upper limit for R2 threshold, default = 0.8.}
 
-\item{transform_M}{transform methylation matrix \code{M}. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation}
+\item{transform_M}{transform methylation matrix \code{M}. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation.}
 }
 \description{
-FSDIM Performs EMVS algorithm for genomics data and computes R2 values. Then the genes are grouped into three groups:
-\enumerate{
-\item M effect, 2) M^c effect; 3) M + M^c effect based on R2 thresholds.
-The default values for \code{nu0}, \code{nu1}, \code{lambda}, \code{a}, \code{b} were chosen per publication: \emph{Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association}
-}
+Run first stage model in \emph{Hao Xue, Sounak Chakraborty & Tanujit Dey (2024), Bayesian Shrinkage Models for Integration and Analysis of Multiplatform High-dimensional Genomics Data} and \emph{Mansoo Cho, Tanujit Dey, Hao Xue & Sounak Chakraborty (2025), BayesMultiomics: An R Package for Bayesian Shrinkage Models for Integration and Analysis of Multi-platform High-dimensional Genomics Data}.
+In the first stage, Expectation–Maximization Variable Selection (EMVS) is used to learn the regulating mechanism between epigenomics (e.g., gene methylation) and gene expression while considering functional gene annotations.
+Then the genes are grouped into three groups:
+i) M effect, ii) M^c effect and iii) M + M^c effect based on R2 thresholds.
+The default values for \code{nu0}, \code{nu1}, \code{nu}, \code{lambda}, \code{a}, \code{b} were chosen per publication: \emph{Veronika Ročková & Edward I. George (2013): EMVS: The EM Approach to Bayesian Variable Selection, Journal of the American Statistical Association}
 }
 \examples{
 

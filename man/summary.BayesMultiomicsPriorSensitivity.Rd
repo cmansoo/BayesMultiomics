@@ -7,7 +7,7 @@
 \method{summary}{BayesMultiomicsPriorSensitivity}(BayesMultiomicsPriorSensitivity_obj)
 }
 \arguments{
-\item{BayesMultiomicsPriorSensitivity_obj}{BayesMultiomicsPriorSensitivity object}
+\item{BayesMultiomicsPriorSensitivity_obj}{BayesMultiomicsPriorSensitivity object(t}
 }
 \description{
 summary method for BayesMultiomicsPriorSensitivity object
