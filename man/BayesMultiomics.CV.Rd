@@ -42,9 +42,9 @@ BayesMultiomics.CV(
 
 \item{nu1}{parameter \code{nu1} for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).}
 
-\item{nu}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
+\item{nu}{For the prior on \eqn{\sigma^2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
-\item{lambda}{For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
+\item{lambda}{For the prior on \eqn{\sigma^2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.}
 
 \item{a}{Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.}
 

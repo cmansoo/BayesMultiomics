@@ -12,8 +12,8 @@
 #' @param grouping Gene grouping, a vector of group membership of each gene. This could be given by the user or obatined by performing DAVID Functional Classification of genes. See vignette("gene_grouping").
 #' @param nu0 Parameter `nu0` for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
 #' @param nu1 parameter `nu1` for spike-and-slab Gaussian mixture prior on \eqn{\omega} (orginally \eqn{\beta} in Veronika Ročková & Edward I. George (2013)).
-#' @param lambda For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
-#' @param nu For the prior on \eqn{\sigma2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param lambda For the prior on \eqn{\sigma^2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
+#' @param nu For the prior on \eqn{\sigma^2}, an inverse gamma prior \eqn{\pi(\sigma2 | \gamma) = IG(\nu/2, \nu\lambda/2)}.
 #' @param a Parameter \eqn{a} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
 #' @param b Parameter \eqn{b} for the beta prior \eqn{\pi(\theta) \propto \theta a-1(1-\theta)b-1}, \eqn{a, b > 0}.
 #' @param EMVS_I Maximum number of iterations of EMVS.
