@@ -35,7 +35,7 @@ gene_grouping
 ```
 
 
-## 5. First Stage Data Integration Model (FSDIM)
+## First Stage Data Integration Model (FSDIM)
 
 In the first stage, we will combine information from methylation, gene expression, and gene
 function annotation data to group genes based on how their expressions are regulated by DNA
@@ -305,8 +305,8 @@ The default values for `nu0`, `nu1`, `lambda`, `a`, `b` were chosen per publicat
 - `nu1`: default = 10^3, Parameter nu0 for spike-and-slab Gaussian mixture prior on β
 - `nu`: default = 1, For the prior on σ2, an inverse gamma prior π(σ2∣γ)=IG(ν/2,νλ/2)
 - `lambda`: default = 1, For the prior on σ2, an inverse gamma prior π(σ2∣γ)=IG(ν/2,νλ/2)
-- `a`: default = 1, Parameter a for the beta prior π(θ)∝ θ^(a−1)(1−θ)^(b−1), a,b>0
-- `b`: default = 1, Parameter b for the beta prior π(θ)∝ θ^(a−1)(1−θ)^(b−1), a,b>0
+- `c`: default = 1, Parameter c for the beta prior π(θ)∝ θ^(c−1)(1−θ)^(d−1), c,d>0
+- `d`: default = 1, Parameter d for the beta prior π(θ)∝ θ^(c−1)(1−θ)^(d−1), c,d>0
 - `EMVS_I`: default = 10, Maximum number of iterations of EMVS. 
 - `EMVS_thresh`: default = 1e-04, Threshold for convergence criterion for EMVS
 - `transform_M`: default = "L", transformation parameter for methylation matrix M. Options: "L" = linear transformation, "Q" = quadratic transformation; "QS" = cubic spline transformation
