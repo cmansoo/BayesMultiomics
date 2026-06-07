@@ -5,6 +5,8 @@
   Our BayesMultiomics package offers versatility and flexibility by incorporating information across all 4 mentioned platforms to learn the underlying biological mechanisms among different high-throughput platforms. 
   In addition, our package is scalable and can perform high-dimensional variable selection for discovering relationship across platforms and identifying clinically relevant biomarkers.
 
+Read more about the work [here](https://onlinelibrary.wiley.com/doi/10.1002/sam.70009)
+
 ## Installation
 ```
 remotes::install_github("cmansoo/BayesMultiomics", build_vignettes=TRUE)
